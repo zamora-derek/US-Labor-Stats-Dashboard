@@ -23,7 +23,7 @@ jobs:
           pip install pandas requests
 
       - name: Run data collector
-        run: python data_collector.py
+        run: python scripts/data_collector.py
 
       - name: Commit and push data
         run: |
