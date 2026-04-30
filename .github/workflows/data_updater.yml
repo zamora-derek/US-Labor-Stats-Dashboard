@@ -3,6 +3,7 @@ name: Monthly Data Updater
 on:
   schedule:
     - cron: '0 13 7 * *' # BLS data releases first Friday 12:30 UTC, monthly
+  workflow_dispatch: 
 
 jobs:
   update-bls-data:
