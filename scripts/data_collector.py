@@ -14,7 +14,9 @@ series_dict = {
     'JTS000000000000000JOR': 'Jobs',
     'LNS11300000': 'Labor Force',
     'CES0500000003': 'Hourly Earnings',
-    'CUUR0000SA0': 'CPI'
+    'CUUR0000SA0': 'CPI',
+    'LNS14000000': 'Unemployement Rate',
+    'CES0000000001': 'Non Farm Emp'
 }
 
 
@@ -76,7 +78,7 @@ def fetch_data(series, start, end, api):
 
 
 if __name__ == "__main__":
-    df = fetch_data(list(series_dict.keys()), 1900, current_year, key) # fetches data from 1900 to current year
+    df = fetch_data(list(series_dict.keys()), 2000, current_year, key) # fetches data from 2000 to current year
     if df is not None:
     
         df.to_csv('data/bls_data.csv')
