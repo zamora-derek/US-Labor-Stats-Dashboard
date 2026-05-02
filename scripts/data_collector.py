@@ -15,7 +15,7 @@ series_dict = {
     'LNS11300000': 'Labor Force',
     'CES0500000003': 'Hourly Earnings',
     'CUUR0000SA0': 'CPI',
-    'LNS14000000': 'Unemployement Rate',
+    'LNS14000000': 'Unemployment Rate',
     'CES0000000001': 'Non Farm Emp'
 }
 
