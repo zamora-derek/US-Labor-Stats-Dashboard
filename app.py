@@ -6,8 +6,8 @@ from datetime import date
 
 @st.cache_data  # allows streamlit to store the data and not have to get the data each time
 def load_data():
-    main = pd.read_csv('bls_data.csv', index_col='Date', parse_dates=True)
-    state = pd.read_csv('state_data.csv', parse_dates=['Date'])
+    main = pd.read_csv('data/bls_data.csv', index_col='Date', parse_dates=True)
+    state = pd.read_csv('data/state_data.csv', parse_dates=['Date'])
     return main, state
 
 
