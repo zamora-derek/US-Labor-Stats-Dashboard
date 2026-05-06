@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from datetime import date
+import statsmodels
 
 
 @st.cache_data  # allows streamlit to store the data and not have to get the data each time
@@ -22,7 +23,8 @@ tab_home, tab_wages, tab_inflation, tab_labor, tab_map = st.tabs([
     "Purchasing Power",
     "Inflation",
     "Labor Market",
-    "Regional Trends"
+    "Regional Trends",
+    "Model"
 ])
 
 # HOME TAB
@@ -165,7 +167,8 @@ with tab_labor:
     bev_data = data.dropna(subset=['Jobs', 'Unemployment Rate'])
     bev_fig = px.scatter(bev_data, x='Unemployment Rate', y='Jobs',
                          color=bev_data.index.year,
-                         color_continuous_scale='sunset')
+                         color_continuous_scale='sunset',
+                         labels={'Jobs': 'Job Openings Rate'})
 
     bev_fig.update_layout(
         margin={"r": 0, "t": 0, "l": 0, "b": 0},  # removes white padding around plot to show text below
@@ -240,3 +243,35 @@ with tab_map:
         st.write("### :red[Bottom 5]")
         for i, row in bot_5.iterrows():
             st.metric(row['State'], f"{row['Job Growth %']:.2f}%")
+
+# OLS TAB
+
+with tab_ols:
+    regression_data = data.dropna(subset=['Unemployment Rate', 'Inflation Rate'])
+
+    ols_fig = px.scatter(
+        regression_data,
+        x='Unemployment Rate',
+        y='Inflation Rate',
+        trendline="ols",
+        trendline_color_override="red",
+        title="OLS Regression: Inflation vs. Unemployment",
+        labels={'Unemployment Rate': 'Unemployment (%)', 'Inflation Rate': 'Inflation (%)'},
+        hover_data=[regression_data.index.year]  # shows year on hover
+    )
+
+    st.plotly_chart(ols_fig, use_container_width=True)
+
+    results = px.get_trendline_results(ols_fig).px_fit_results.iloc[0]  # gets the stats results from the ols model
+
+
+    r = results.rsquared
+
+    st.write(f"""
+        Interpretation: This model's R-Squared of {r:.4f} means that {results.rsquared * 100:.2f}% of the changes in 
+        the inflation rate are explained by the unemployment rate. The other {(1 - results.rsquared) * 100:.2f}% 
+        change in inflation rate come from other variables. """)
+
+    st.write(results.summary())
+
+
