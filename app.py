@@ -18,7 +18,7 @@ today_date = date.today()
 st.set_page_config(layout="wide")  # stretches the dashboard to fit page
 
 
-tab_home, tab_wages, tab_inflation, tab_labor, tab_map = st.tabs([
+tab_home, tab_wages, tab_inflation, tab_labor, tab_map, tab_ols = st.tabs([
     "Home",
     "Purchasing Power",
     "Inflation",
